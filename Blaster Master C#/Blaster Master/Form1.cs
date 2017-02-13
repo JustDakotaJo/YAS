@@ -81,6 +81,7 @@ namespace BlasterMaster
         private int newBatchDelay;
         private int tInvadersInPath;
         private int genWorkingCounter;
+        private int YAS;
         private int tDiversInPath;
         private int tShootersInPath;
         private int enPlayerSprite;
@@ -102,6 +103,7 @@ namespace BlasterMaster
         private bool doingSOGame;
         private bool sndEngineError;
         private bool playerExplosion;
+      
         private bool[] dockReserved = new bool[60];
         private bool[] dockActive = new bool[60];
 
@@ -1141,7 +1143,7 @@ namespace BlasterMaster
                                 }
                             }
                         }
-
+                        
                         // :: Check for collisions between the invaders ship and the player's ship ::
 
                         if (invaders[j].isActive())
@@ -1188,7 +1190,7 @@ namespace BlasterMaster
                                 }
                             }
                         }
-
+                      
                         // Collision flag set? play sound effect and set player dead
                         if (collision)
                         {
@@ -1226,6 +1228,7 @@ namespace BlasterMaster
                                     rect2.Width = invaders[j].getRectW();
                                     rect2.Height = invaders[j].getRectH();
 
+                                    
                                     // Collision?
                                     if (rect1.IntersectsWith(rect2))
                                     {
@@ -1240,7 +1243,10 @@ namespace BlasterMaster
 
                                                 // Inc score and set flag
                                                 score += 50;
+
                                                 invaderDead = true;
+                                                invaders[j].getBleed(graphicsBuffer, true, 0);
+                                                
                                                 break;
 
                                             case 1: //:: Red invader requires 2 shots to kill ::
@@ -1253,6 +1259,12 @@ namespace BlasterMaster
 
                                                 // Inc score and set flag
                                                 invaderDead = true;
+
+
+                                                invaders[j].getBleed(graphicsBuffer,true, 0);
+
+
+
                                                 score += 100;
                                                 break;
 
@@ -1272,6 +1284,8 @@ namespace BlasterMaster
 
                                                 // Inc score and set flag
                                                 invaderDead = true;
+                                                invaders[j].getBleed(graphicsBuffer, true, 0);
+
                                                 score += 250;
 
                                                 // Drop pickup for killing this invader
@@ -1325,11 +1339,12 @@ namespace BlasterMaster
 
                                         // Enemy flag set? invader is now inactive
                                         if (invaderDead)
-                                        {
+                                       {
                                             dockActive[invaders[j].getDockingCell()] = false;
                                             invaders[j].setActive(false);
                                             invaderDead = false;
-
+                                          //  invaders[i].Draw(graphicsBuffer, invaders[i].getAngle(), static_doEnemies_ani, invaders[i].isRotating(), true);
+                                            //findme
                                             // Play snd effect
                                             if (!sndEngineError)
                                             {
@@ -1563,6 +1578,7 @@ namespace BlasterMaster
                 playerPivotPos = 61;
                 player.setPlayerDead(false);
                 playerExplosion = false;
+                
                 enPlayerSprite = 0;
                 player.setFirePower(1);
                 player.setSheild(false);
@@ -1669,7 +1685,7 @@ namespace BlasterMaster
                 if (particle[i] != null)
                 {
                     // Render if alive ...
-                    particle[i].draw(graphicsBuffer);
+                    particle[i].draw(graphicsBuffer, 0);
 
                     // Kill intance if no longer active
                     if (!particle[i].isActive())
@@ -2556,5 +2572,12 @@ namespace BlasterMaster
             System.Environment.Exit(0);
 
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

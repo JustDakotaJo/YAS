@@ -136,6 +136,12 @@
   <data name="backgroundTop5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\backgroundTop5.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Blood" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Blood.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Blood2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Blood2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="enemyA1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\enemyA1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

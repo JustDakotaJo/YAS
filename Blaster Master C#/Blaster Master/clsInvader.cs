@@ -17,7 +17,7 @@ namespace BlasterMaster
         private System.Drawing.Bitmap[] background = new System.Drawing.Bitmap[7];
         private ImageAttributes ImageAtt = new ImageAttributes();
         private clsTScales tScales = new clsTScales();
-
+        private System.Drawing.Bitmap[] bleed = new System.Drawing.Bitmap[2];
         
         // Properties for this class 
         private int invaderType;
@@ -39,7 +39,7 @@ namespace BlasterMaster
         private bool hasCell;
         private bool twirl;
         private double angle;
-
+      
         // Class refs ...
         private clsInvaderBullet bullet;
          
@@ -66,10 +66,16 @@ namespace BlasterMaster
             invader[4, 1] = BlasterMaster.Properties.Resources.enemyC2;
             invader[5, 0] = BlasterMaster.Properties.Resources.enemyF1;
             invader[5, 1] = BlasterMaster.Properties.Resources.enemyF2;
+            bleed[0] = BlasterMaster.Properties.Resources.Blood;
+            bleed[1] = BlasterMaster.Properties.Resources.Blood2;
 
             // Remove backgrounds ...
             int i = 0;
             int j = 0;
+            for (int e = 0; e <= 1; e++)
+            {
+                bleed[e].MakeTransparent(Color.White);
+            }
 
             for (j = 0; j <= 1; j++)
             {
@@ -79,8 +85,9 @@ namespace BlasterMaster
                 }
             }
         }
+        
 
-        public void doDive()
+    public void doDive()
         {
             //------------------------------------------------------------------------------------------------------------------
             // Purpose: Method to dive straight down towards player  
@@ -496,6 +503,20 @@ namespace BlasterMaster
             }
 
         }
+        public void getBleed(Graphics Destination, bool doBleed, int ani)
+        {
+            
+
+             if (doBleed == true)
+            {
+              
+                // Draw exposion sprites ...
+                ani = ani % 2;
+                Destination.DrawImage(bleed[ani], new Rectangle(base.getX() + Convert.ToInt32((base.getRectW() / 2) - (bleed[ani].Width / 2)), base.getY() + 15, bleed[ani].Width, bleed[ani].Height), 0, 0, bleed[ani].Width, bleed[ani].Height, GraphicsUnit.Pixel, ImageAtt);
+
+            }
+             
+        }
 
         public void Draw(Graphics Destination, double angle, int ani, bool rotate)
         {
@@ -526,12 +547,13 @@ namespace BlasterMaster
                 Destination.DrawImage(invader[this.invaderType, ani], points);
                 
             }
+         
             else // Render invader with no rotation applied
             {
 
                 Destination.DrawImage(invader[this.invaderType, ani], new Rectangle(base.getX(), base.getY(), invader[this.invaderType, ani].Width, invader[this.invaderType, ani].Height), 0, 0, invader[this.invaderType, ani].Width, invader[this.invaderType, ani].Height, GraphicsUnit.Pixel, ImageAtt);
             }
-
+            
             // Sync collision rect ...
             base.setRectW(base.getW());
             base.setRectH(base.getH());

@@ -18,18 +18,23 @@ namespace BlasterMaster
         private bool active;
 
         // Obj refs and instances
+        private System.Drawing.Bitmap[] bleed = new System.Drawing.Bitmap[2];
         private System.Random objRandom = new System.Random(Convert.ToInt32(System.DateTime.Now.Ticks % System.Int32.MaxValue));
- 
+        private ImageAttributes ImageAtt = new ImageAttributes();
+
+
         public clsParticle(int x, int y, int width, int height): base(x, y, width, height)
         {
             //------------------------------------------------------------------------------------------------------------------
             // Purpose: Class constructor  
             //------------------------------------------------------------------------------------------------------------------
-
+            bleed[0] = BlasterMaster.Properties.Resources.Blood;
+            bleed[1] = BlasterMaster.Properties.Resources.Blood2;
             this.active = true;
+            
         }
-
-        public void setFrameNum(int frame)
+      
+    public void setFrameNum(int frame)
         {
             //------------------------------------------------------------------------------------------------------------------
             // Purpose: Mutator (set frame num) 
@@ -56,7 +61,7 @@ namespace BlasterMaster
             return this.active;
         }
 
-        public void draw(Graphics Destination)
+        public void draw(Graphics Destination, int ani)
         {
             //------------------------------------------------------------------------------------------------------------------
             // Purpose: Method to render a particle explosion  
@@ -103,9 +108,12 @@ namespace BlasterMaster
 
                 // Creat brush instance
                 SolidBrush brush = new SolidBrush(starcol);
-
+                for (int e = 0; e <= 1; e++)
+                {
+                    bleed[e].MakeTransparent(Color.White);
+                }
                 // Draw pixels
-                Destination.FillRectangle(brush, Convert.ToSingle(x), Convert.ToSingle(y), 2, 2);
+                Destination.DrawImage(bleed[ani], new Rectangle(base.getX() + Convert.ToInt32((base.getRectW() / 2) - (bleed[ani].Width / 2)), base.getY() + 15, bleed[ani].Width, bleed[ani].Height), 0, 0, bleed[ani].Width, bleed[ani].Height, GraphicsUnit.Pixel, ImageAtt);
 
                 // Clean up
                 brush.Dispose();
